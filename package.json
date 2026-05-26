@@ -1,0 +1,49 @@
+{
+  "name": "som-code",
+  "version": "1.0.0",
+  "description": "SOM-CODE — Your AI coding agent. Terminal-native TUI, works with any LLM.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "som-code": "./bin/som-code.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "README.md",
+    "LICENSE",
+    "!**/__pycache__/**",
+    "!**/*.pyc"
+  ],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "dev": "npx tsx src/index.ts",
+    "start": "node dist/index.js",
+    "typecheck": "npx tsc --noEmit",
+    "test": "npm run build && npx tsx tests/protocol.test.ts && npx tsx tests/session.test.ts && python3 tests/test_policy.py && python3 tests/test_subagents.py",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ink": "^5.2.0",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "@types/react": "^18.3.0",
+    "esbuild": "^0.25.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.5.0"
+  },
+  "keywords": [
+    "ai",
+    "coding-agent",
+    "cli",
+    "tui",
+    "llm",
+    "coding-assistant"
+  ],
+  "license": "MIT"
+}
