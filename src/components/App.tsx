@@ -19,6 +19,7 @@ import { MessageList } from './MessageList.js';
 import { StatusBar } from './StatusBar.js';
 import { AskUserQuestion } from './AskUserQuestion.js';
 import { AgentBackend } from '../agent/backend.js';
+import { expandSlashCommand } from '../commands/design.js';
 import type { ProtocolMessage, ToolCallPayload, ToolResultPayload, 
   QuestionPayload, DeltaPayload, ThinkingPayload, DonePayload, PlanPayload } from '../protocol/types.js';
 import { createSession, type SessionRecord } from '../session/store.js';
@@ -127,7 +128,8 @@ export function App({
       turn: prev.turn + 1,
     }));
 
-    backend.sendTask(text, permission);
+    const expandedText = expandSlashCommand(text);
+    backend.sendTask(expandedText, permission);
   };
 
   // Handle backend events

@@ -37,6 +37,7 @@ from som.context.som_md import SomConfigLoader
 
 READ_ONLY_TOOLS = {
     "read", "ls", "grep", "glob_tool", "web_fetch", "web_search",
+    "design_audit", "design_repair_brief",
     "todo_write", "ask_user_question", "enter_plan_mode", "exit_plan_mode",
     "compact_context", "skill_search", "skill_view", "skill_list",
     "subagent_repo_map", "subagent_review", "subagent_test_plan",
@@ -191,9 +192,10 @@ class BackendServer:
 1. Understand the request
 2. Plan using todo_write
 3. Explore with grep, glob, read
-4. Write code
-5. Test with bash
-6. Call task_complete when done
+4. For `/design` work, use design_audit or design_repair_brief before editing UI files
+5. Write code
+6. Test with bash
+7. Call task_complete when done
 
 ## Permission Mode
 Current permission mode: `{permission}`.
@@ -209,6 +211,8 @@ If a needed tool is blocked, explain the exact permission change required instea
 - Test after writing
 - Use ask_user_question when you need clarification
 - If a skill matches your task, load it with skill_view(name) first
+- `/design audit [target]` means audit only: call design_audit and report generated files; do not edit.
+- `/design repair [target]` means call design_repair_brief first, then repair according to its contract and verify.
 """
 
         # Create harness with tool result streaming

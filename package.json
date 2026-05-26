@@ -20,7 +20,7 @@
     "dev": "npx tsx src/index.ts",
     "start": "node dist/index.js",
     "typecheck": "npx tsc --noEmit",
-    "test": "npm run build && npx tsx tests/protocol.test.ts && npx tsx tests/session.test.ts && python3 tests/test_policy.py && python3 tests/test_subagents.py",
+    "test": "npm run build && npx tsx tests/protocol.test.ts && npx tsx tests/session.test.ts && node --test --experimental-strip-types tests/design-command.test.ts && python3 -m unittest discover -s tests",
     "prepublishOnly": "npm run build"
   },
   "engines": {

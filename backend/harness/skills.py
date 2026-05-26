@@ -49,8 +49,11 @@ class SkillLoader:
             skills_dirs: Directories to scan for SKILL.md files.
                          Defaults to ~/.hermes/skills/ and ./skills/
         """
+        packaged_skills = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "skills"))
         self.skills_dirs = skills_dirs or [
+            packaged_skills,
             os.path.expanduser("~/.hermes/skills"),
+            os.path.expanduser("~/.som/skills"),
             os.path.join(os.getcwd(), "skills"),
         ]
         self._skills: dict[str, Skill] = {}

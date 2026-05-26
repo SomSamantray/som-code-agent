@@ -22,6 +22,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from harness.tools import ToolRegistry as BaseToolRegistry, create_coding_tools
 from harness.sandbox import SubprocessSandbox, ToolResult
+from som.tools.design import design_audit as run_design_audit, design_repair_brief as run_design_repair_brief
 
 
 # ═══════════════════════════════════════════════════════════════════
@@ -793,6 +794,25 @@ def create_som_tools(sandbox: SubprocessSandbox) -> BaseToolRegistry:
         """
         return tool_web_search(query, num_results)
     
+    @registry.register
+    def design_audit(target: str = ".", purpose: str = "auto", write_report: bool = True) -> ToolResult:
+        """Audit frontend/design files for purpose fit, design smells, OKLCH usage, and UI state coverage.
+
+        target: Workspace-relative file or directory to audit
+        purpose: Surface purpose override: auto, Monitor, Operate, Decide, Explore, or General
+        write_report: Whether to write JSON and Markdown reports under .som-code/design/
+        """
+        return run_design_audit(target=target, purpose=purpose, write_report=write_report, sandbox=sandbox)
+
+    @registry.register
+    def design_repair_brief(target: str = ".", purpose: str = "auto") -> ToolResult:
+        """Create a design repair contract from a deterministic audit without directly editing files.
+
+        target: Workspace-relative file or directory to inspect
+        purpose: Surface purpose override: auto, Monitor, Operate, Decide, Explore, or General
+        """
+        return run_design_repair_brief(target=target, purpose=purpose, sandbox=sandbox)
+
     # ── Task Management ──
     @registry.register
     def todo_write(todos: list[dict] = None, merge: bool = False) -> ToolResult:
